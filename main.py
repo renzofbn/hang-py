@@ -19,7 +19,6 @@ def run():
     chars = []
     while True:
         if errores < 10:
-            print(dicc)
             hang_py(errores)
             print("¡Adivina la palabra¡")
             for line in lines:
