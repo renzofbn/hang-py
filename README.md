@@ -1,2 +1,2 @@
-# hang-py
+# Hang-py
 Hangman game using python
