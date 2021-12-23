@@ -3,6 +3,7 @@ from Data.utilities import get_name, player, clear, main_game
 
 
 def run():
+    clear()
     tittle()
     print("¡ Bienvenid@ ! \n")
     name = get_name()

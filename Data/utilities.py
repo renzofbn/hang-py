@@ -35,7 +35,8 @@ def get_name():
         try:
             name = input("\033[94mPorfavor ingresa tu nombre: \033[0m")
             if len(name) == 0:
-                raise ValueError("\033[91mNo se permiten espacios en blaco, intenta de nuevo....")
+                raise ValueError(
+                    "\033[91mNo se permiten espacios en blaco, intenta de nuevo....")
             break
         except ValueError as ve:
             print(ve)
@@ -53,9 +54,11 @@ def right_c(chars):
             if len(c) > 1:
                 raise ValueError("Ingresa una letra por vez, ten cuidado!!")
             if len(c) == 0:
-                raise ValueError("No se aceptan respuestas en blanco, acaso quieres perder?")
+                raise ValueError(
+                    "No se aceptan respuestas en blanco, acaso quieres perder?")
             if c in chars:
-                raise ValueError("Ya has ingresado esta letra anteriormente, ten cuidado!!")
+                raise ValueError(
+                    "Ya has ingresado esta letra anteriormente, ten cuidado!!")
             if not c.isalpha():
                 raise ValueError("No se permiten caracteres, ten cuidado!!")
             break
@@ -114,6 +117,7 @@ def bye():
 
 def main_game(name):
     guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game()
+    print('\033[93m', end="")
     while True:
         if errores < 10 and state == 1:
             hang_py(errores, state)
@@ -147,7 +151,8 @@ def main_game(name):
             for letra in chars:
                 print(letra, end=" ")
             print()
-            again = input("\033[93m\n¿ Quieres seguir jugando ?  [s/n] \033[0m")
+            again = input(
+                "\033[93m\n¿ Quieres seguir jugando ?  [s/n] \033[0m")
             if again == "s" or again == "S":
                 guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game()
             else:
