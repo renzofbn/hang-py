@@ -1,5 +1,5 @@
-from Data.ascii_status import tittle
-from Data.utilities import get_name, player, clear, main_game
+from src.ascii_status import tittle
+from src.utilities import get_name, player, clear, main_game
 
 
 def run():

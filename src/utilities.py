@@ -1,4 +1,4 @@
-from Data.ascii_status import *
+from src.ascii_status import *
 
 
 def clear():
@@ -98,7 +98,7 @@ def u_lose(name, chars, guess):
 
 def new_game():
     import random
-    with open('./Data/words.txt', 'r', encoding="utf-8") as file:
+    with open('./src/words.txt', 'r', encoding="utf-8") as file:
         words = [palabra[:-1] for palabra in file]
 
     guess = random.choice(words)
