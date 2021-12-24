@@ -1,10 +1,10 @@
 ## TOP SCORES ##
 
-Renzo
-15
+AAA
+0
 BBB
-1
+0
 CCC
-1
+0
 
 # DO NOT MODIFY THIS FILE // NO MODIFICAR

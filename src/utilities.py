@@ -13,7 +13,7 @@ def player(name):
     print()
     print(f"{name}, espero que te diviertas jugando a Hang-py  :D")
     print("Las reglas son simples, tienes 10 intentos para adivinar la totalidad")
-    print("de letras que conforman una palabra, escogida al azar")
+    print("de letras que conforman una palabra, escogida al azar.")
     print()
     input('\033[93m¿List@ para jugar?  (Presiona enter para continuar)  \033[0m')
 
@@ -73,21 +73,21 @@ def right_c(chars):
 
 
 def show_chars(chars, r_chars, w_chars):
-    print("Letras ingresadas hasta ahora -> ", end="")
+    print("\033[93mLetras ingresadas hasta ahora -> \033[0m", end="")
     for letra in chars:
         print(letra, end=" ")
     print()
-    print("Letras correctas ingresadas hasta ahora -> ", end="")
+    print("\033[92mLetras correctas ingresadas hasta ahora -> \033[0m", end="")
     for letra in r_chars:
         print(letra, end=" ")
     print()
-    print("Letras incorrectas ingresadas hasta ahora -> ", end="")
+    print("\033[91mLetras incorrectas ingresadas hasta ahora -> \033[0m", end="")
     for letra in w_chars:
         print(letra, end=" ")
     print('\n')
 
 
-def u_lose(name, chars, guess, points):
+def u_lose(chars, guess, points):
     print("¡No pudiste adivinar la palabra!", "\n")
     print(f"\033[95mLa palabra era: {guess}\033[0m", "\n")
     print("Las letras que ingresaste fueron -> ", end="")
@@ -97,8 +97,7 @@ def u_lose(name, chars, guess, points):
     if points < 0:
         print("No has conseguido ningun punto")
     else:
-        print(f"Has conseguido {points}.")
-    print(f"{name}, gracias por jugar, hasta otra oportunidad", "\n" * 2)
+        print(f"Has conseguido {points} puntos.")
     input("\033[93mPresiona enter para continuar \033[0m")
     print('\033[91m')
 
@@ -109,23 +108,26 @@ def new_game(words):
     right_a = [c for c in guess]
     dicc = map_word(guess)
     lines = [" _ " for _ in range(len(guess))]
-    chars, r_chars, w_chars, errores, state, position = [], [], [], 0, 1, 0
-    return guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, position
+    chars, r_chars, w_chars, errores, state = [], [], [], 0, 1
+    return guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state
 
 
-def bye(position ,data, points,name):
-    print(f"Has llegado al puesto N° {position} !!!")
-    n_top = get_name(name)
-    if position == 1:
-        data[1] = str(points)+"\n"
-        data[0] = n_top+"\n"
-    if position == 2:
-        data[3] = str(points)+"\n"
-        data[2] = n_top+"\n"
-    if position == 3:
-        data[5] = str(points)+"\n"
-        data[4] = n_top+"\n"
-    save_top(data)
+def bye(position, data, points, name):
+    if position != 0:
+        print(f"\033[92mHas llegado al puesto N° {position} !!!")
+        n_top = get_name(name)
+        if position == 1:
+            data[1] = str(points) + "\n"
+            data[0] = n_top + "\n"
+        if position == 2:
+            data[3] = str(points) + "\n"
+            data[2] = n_top + "\n"
+        if position == 3:
+            data[5] = str(points) + "\n"
+            data[4] = n_top + "\n"
+        save_top(data)
+    else:
+        print("No has obtenido los suficientes puntos para llegar al top :(")
     print("\nQue tengas buen día, gracias por jugar\n")
     input("\033[93mPresiona enter para continuar ")
     print('\033[92m')
@@ -146,11 +148,11 @@ def top(points, data):
         position = 1
     elif points >= int(data[3]):
         print("Felicidades, te encuentras en el segundo puesto!!")
-        print(f"Tan solo {int(data[1]) - points} puntos para romper un record!!")
+        print(f"Tan solo {int(data[1]) - points} punto(s) para romper un record!!")
         position = 2
     elif points >= int(data[5]):
         print("Nada mal, estas en tercer puesto")
-        print(f"Necesitas {int(data[3]) - points} puntos para ser segundo!!")
+        print(f"Necesitas {int(data[3]) - points} punto(s) para ser segundo!!")
         position = 3
     else:
         print(f"Sigue asi, te falta {int(data[5]) - points} puntos para estar 3ero")
@@ -159,13 +161,23 @@ def top(points, data):
     return position
 
 
+def show_top():
+    with open("./src/top.txt", 'r', encoding="utf-8") as f:
+        data = f.readlines()[2:8]
+        data = [palabra[:-1] for palabra in data]
+    print(f"\033[95m\nTOP PLAYERS\n-----------------------\033[0m\n\n1){data[0]} -> {data[1]}")
+    print(f"2){data[2]} -> {data[3]}\n3){data[4]} -> {data[5]}")
+    print("\n\033[95m-----------------------\033[0m")
+
+
 def main_game(name):
     with open("./src/top.txt", 'r', encoding="utf-8") as f:
         data = f.readlines()[2:8]
     with open('./src/words.txt', 'r', encoding="utf-8") as file:
         words = [palabra[:-1] for palabra in file]
+    position = 0
     points = 0
-    guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, position = new_game(words)
+    guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game(words)
     print('\033[93m', end="")
     while True:
         if errores < 10 and state == 1:
@@ -206,7 +218,7 @@ def main_game(name):
             again = input(
                 f"\033[93m\n¿{name}, quieres seguir jugando? [s/n] \033[0m")
             if again == "s" or again == "S":
-                guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, position = new_game(words)
+                guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game(words)
             else:
                 state = 3
             clear()
@@ -215,7 +227,12 @@ def main_game(name):
 
     if errores == 10:
         hang_py(errores, state)
-        u_lose(name, chars, guess, points)
+        u_lose(chars, guess, points)
+        position = top(points, data)
+        clear()
+        bye(position, data, points, name)
+        if position == 0:
+            print('\033[91m',end="")
     else:
         tittle()
         bye(position, data, points, name)
