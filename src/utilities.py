@@ -12,8 +12,8 @@ def clear():
 def player(name):
     print()
     print(f"{name}, espero que te diviertas jugando a Hang-py  :D")
-    print("Las reglas son simples, tienes 10 intentos para adivinar la totalidad de letras ")
-    print("que conforman una palabra, escogida al azar")
+    print("Las reglas son simples, tienes 10 intentos para adivinar la totalidad")
+    print("de letras que conforman una palabra, escogida al azar")
     print()
     input('\033[93m¿List@ para jugar?  (Presiona enter para continuar)  \033[0m')
 
@@ -30,13 +30,16 @@ def map_word(word):
     return dicc
 
 
-def get_name():
+def get_name(name):
     while True:
         try:
-            name = input("\033[94mPorfavor ingresa tu nombre: \033[0m")
+            name = name + input(f"\033[94mPorfavor ingresa tu nombre: \033[0m {name}")
             if len(name) == 0:
                 raise ValueError(
                     "\033[91mNo se permiten espacios en blaco, intenta de nuevo....")
+            if len(name) > 15:
+                raise ValueError(
+                    "\033[91mTu nombre es muy largo, intenta de nuevo....")
             break
         except ValueError as ve:
             print(ve)
@@ -84,44 +87,90 @@ def show_chars(chars, r_chars, w_chars):
     print('\n')
 
 
-def u_lose(name, chars, guess):
+def u_lose(name, chars, guess, points):
     print("¡No pudiste adivinar la palabra!", "\n")
     print(f"\033[95mLa palabra era: {guess}\033[0m", "\n")
     print("Las letras que ingresaste fueron -> ", end="")
     for letra in chars:
         print(letra, end=" ")
     print()
-    print(f"{name}, gracia por jugar, hasta otra oportunidad", "\n" * 2)
+    if points < 0:
+        print("No has conseguido ningun punto")
+    else:
+        print(f"Has conseguido {points}.")
+    print(f"{name}, gracias por jugar, hasta otra oportunidad", "\n" * 2)
     input("\033[93mPresiona enter para continuar \033[0m")
     print('\033[91m')
 
 
-def new_game():
+def new_game(words):
     import random
-    with open('./src/words.txt', 'r', encoding="utf-8") as file:
-        words = [palabra[:-1] for palabra in file]
-
     guess = random.choice(words)
     right_a = [c for c in guess]
     dicc = map_word(guess)
     lines = [" _ " for _ in range(len(guess))]
-    chars, r_chars, w_chars, errores, state = [], [], [], 0, 1
-    return guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state
+    chars, r_chars, w_chars, errores, state, position = [], [], [], 0, 1, 0
+    return guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, position
 
 
-def bye():
+def bye(position ,data, points,name):
+    print(f"Has llegado al puesto N° {position} !!!")
+    n_top = get_name(name)
+    if position == 1:
+        data[1] = str(points)+"\n"
+        data[0] = n_top+"\n"
+    if position == 2:
+        data[3] = str(points)+"\n"
+        data[2] = n_top+"\n"
+    if position == 3:
+        data[5] = str(points)+"\n"
+        data[4] = n_top+"\n"
+    save_top(data)
     print("\nQue tengas buen día, gracias por jugar\n")
     input("\033[93mPresiona enter para continuar ")
     print('\033[92m')
 
 
+def save_top(data):
+    a = ["## TOP SCORES ##\n", "\n", data[0], data[1], data[2], data[3], data[4], data[5], "\n",
+         "# DO NOT MODIFY THIS FILE // NO MODIFICAR"]
+    with open("./src/top.txt", 'w', encoding='utf-8') as f:
+        for name in a:
+            f.write(name)
+
+
+def top(points, data):
+    print('\033[92m', end="")
+    if points >= int(data[1]):
+        print("Estas ropiendo un record, estas primero!!!!")
+        position = 1
+    elif points >= int(data[3]):
+        print("Felicidades, te encuentras en el segundo puesto!!")
+        print(f"Tan solo {int(data[1]) - points} puntos para romper un record!!")
+        position = 2
+    elif points >= int(data[5]):
+        print("Nada mal, estas en tercer puesto")
+        print(f"Necesitas {int(data[3]) - points} puntos para ser segundo!!")
+        position = 3
+    else:
+        print(f"Sigue asi, te falta {int(data[5]) - points} puntos para estar 3ero")
+        position = 0
+    print('\033[0m', end="")
+    return position
+
+
 def main_game(name):
-    guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game()
+    with open("./src/top.txt", 'r', encoding="utf-8") as f:
+        data = f.readlines()[2:8]
+    with open('./src/words.txt', 'r', encoding="utf-8") as file:
+        words = [palabra[:-1] for palabra in file]
+    points = 0
+    guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, position = new_game(words)
     print('\033[93m', end="")
     while True:
         if errores < 10 and state == 1:
             hang_py(errores, state)
-            print("¡Adivina la palabra¡")
+            print(f"¡{name}, adivina la palabra¡")
             print()
             for line in lines:
                 print(line, end="")
@@ -141,20 +190,23 @@ def main_game(name):
             else:
                 print('\033[91m')
                 w_chars.append(c)
+                points -= 1
                 errores += 1
             clear()
         elif state == 2:
+            points += 20
             clear()
             hang_py(errores, state)
-            print("Bien jugado, adivinaste la palabra", guess)
-            print("Las letras que ingresaste para hallarla fueron -> ", end="")
+            print(f"{name}, adivinaste la palabra", guess)
+            print("Letras ingresadas -> ", end="")
             for letra in chars:
                 print(letra, end=" ")
-            print()
+            print(f"\nHas conseguido {points} puntos hasta ahora\n")
+            position = top(points, data)
             again = input(
-                "\033[93m\n¿ Quieres seguir jugando ?  [s/n] \033[0m")
+                f"\033[93m\n¿{name}, quieres seguir jugando? [s/n] \033[0m")
             if again == "s" or again == "S":
-                guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game()
+                guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, position = new_game(words)
             else:
                 state = 3
             clear()
@@ -163,9 +215,9 @@ def main_game(name):
 
     if errores == 10:
         hang_py(errores, state)
-        u_lose(name, chars, guess)
+        u_lose(name, chars, guess, points)
     else:
         tittle()
-        bye()
+        bye(position, data, points, name)
     clear()
     game_over()

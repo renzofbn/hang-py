@@ -6,7 +6,7 @@ def run():
     clear()
     tittle()
     print("¡ Bienvenid@ ! \n")
-    name = get_name()
+    name = get_name(name="")
     player(name)
     clear()
     main_game(name)
