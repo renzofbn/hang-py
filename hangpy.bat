@@ -1,2 +1,2 @@
 @echo off
-cd \Program Files\hang-py\ && python main.py
+cd c:\Games\hang-py\ && python main.py
