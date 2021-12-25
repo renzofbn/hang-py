@@ -114,6 +114,7 @@ def new_game(words):
 
 def bye(position, data, points, name):
     if position != 0:
+        print("\n")
         print(f"\033[92mHas llegado al puesto N° {position} !!!")
         n_top = get_name(name)
         if position == 1:
@@ -230,6 +231,7 @@ def main_game(name):
         u_lose(chars, guess, points)
         position = top(points, data)
         clear()
+        tittle()
         bye(position, data, points, name)
         if position == 0:
             print('\033[91m',end="")
