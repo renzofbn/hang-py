@@ -106,11 +106,12 @@ def u_lose(chars, guess, points):
 def new_game(words):
     import random
     guess = random.choice(words)
+    words.remove(guess)
     right_a = [c for c in guess]
     dicc = map_word(guess)
     lines = [" _ " for _ in range(len(guess))]
     chars, r_chars, w_chars, errores, state = [], [], [], 0, 1
-    return guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state
+    return guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, words
 
 
 def bye(position, data, points, name):
@@ -182,7 +183,7 @@ def main_game(name):
         words = [palabra[:-1] for palabra in file]
     position = 0
     points = 0
-    guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game(
+    guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, words = new_game(
         words)
     print('\033[93m', end="")
     while True:
@@ -223,8 +224,8 @@ def main_game(name):
             position = top(points, data)
             again = input(
                 f"\033[93m\n¿{name}, quieres seguir jugando? [s/n] \033[0m")
-            if again == "s" or again == "S":
-                guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game(
+            if again == "s" or again == "S" or len(again) == 0:
+                guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state, words = new_game(
                     words)
             else:
                 state = 3
@@ -246,3 +247,4 @@ def main_game(name):
         bye(position, data, points, name)
     clear()
     game_over()
+    print(words)
