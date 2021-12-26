@@ -33,10 +33,11 @@ def map_word(word):
 def get_name(name):
     while True:
         try:
-            name = name + input(f"\033[94mPorfavor ingresa tu nombre: \033[0m {name}")
+            name = name + \
+                input(f"\033[94mPor favor ingresa tu nombre: \033[0m {name}")
             if len(name) == 0:
                 raise ValueError(
-                    "\033[91mNo se permiten espacios en blaco, intenta de nuevo....")
+                    "\033[91mNo se permiten espacios en blanco, intenta de nuevo....")
             if len(name) > 15:
                 raise ValueError(
                     "\033[91mTu nombre es muy largo, intenta de nuevo....")
@@ -53,7 +54,7 @@ def right_c(chars):
         try:
             c = input('\033[94mIngresa una letra: \033[0m').upper()
             if c.isdigit():
-                raise ValueError("Solo se acpetan letras, ten cuidado!!")
+                raise ValueError("Solo se aceptan letras, ten cuidado!!")
             if len(c) > 1:
                 raise ValueError("Ingresa una letra por vez, ten cuidado!!")
             if len(c) == 0:
@@ -95,7 +96,7 @@ def u_lose(chars, guess, points):
         print(letra, end=" ")
     print()
     if points < 0:
-        print("No has conseguido ningun punto")
+        print("No has conseguido ningún punto")
     else:
         print(f"Has conseguido {points} puntos.")
     input("\033[93mPresiona enter para continuar \033[0m")
@@ -145,18 +146,20 @@ def save_top(data):
 def top(points, data):
     print('\033[92m', end="")
     if points >= int(data[1]):
-        print("Estas ropiendo un record, estas primero!!!!")
+        print("Estás rompiendo un récord, estás primero!!!!")
         position = 1
     elif points >= int(data[3]):
         print("Felicidades, te encuentras en el segundo puesto!!")
-        print(f"Tan solo {int(data[1]) - points} punto(s) para romper un record!!")
+        print(
+            f"Tan solo {int(data[1]) - points} punto(s) para romper un récord!!")
         position = 2
     elif points >= int(data[5]):
         print("Nada mal, estas en tercer puesto")
         print(f"Necesitas {int(data[3]) - points} punto(s) para ser segundo!!")
         position = 3
     else:
-        print(f"Sigue asi, te falta {int(data[5]) - points} puntos para estar 3ero")
+        print(
+            f"Sigue así, te falta {int(data[5]) - points} puntos para estar 3°")
         position = 0
     print('\033[0m', end="")
     return position
@@ -166,7 +169,8 @@ def show_top():
     with open("./src/top.txt", 'r', encoding="utf-8") as f:
         data = f.readlines()[2:8]
         data = [palabra[:-1] for palabra in data]
-    print(f"\033[95m\nTOP PLAYERS\n-----------------------\033[0m\n\n1){data[0]} -> {data[1]}")
+    print(
+        f"\033[95m\nTOP PLAYERS\n-----------------------\033[0m\n\n1){data[0]} -> {data[1]}")
     print(f"2){data[2]} -> {data[3]}\n3){data[4]} -> {data[5]}")
     print("\n\033[95m-----------------------\033[0m")
 
@@ -178,7 +182,8 @@ def main_game(name):
         words = [palabra[:-1] for palabra in file]
     position = 0
     points = 0
-    guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game(words)
+    guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game(
+        words)
     print('\033[93m', end="")
     while True:
         if errores < 10 and state == 1:
@@ -219,7 +224,8 @@ def main_game(name):
             again = input(
                 f"\033[93m\n¿{name}, quieres seguir jugando? [s/n] \033[0m")
             if again == "s" or again == "S":
-                guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game(words)
+                guess, right_a, dicc, lines, chars, r_chars, w_chars, errores, state = new_game(
+                    words)
             else:
                 state = 3
             clear()
@@ -234,7 +240,7 @@ def main_game(name):
         tittle()
         bye(position, data, points, name)
         if position == 0:
-            print('\033[91m',end="")
+            print('\033[91m', end="")
     else:
         tittle()
         bye(position, data, points, name)
