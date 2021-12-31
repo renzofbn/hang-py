@@ -32,7 +32,7 @@ alias hangpy="cd RUTA_DEL_ARCHIVO_MAIN.PY && python main.py && cd ~"
 ```
 * Donde RUTA_DEL_ARCHIVO_MAIN.PY es la ruta que copiaste en el paso 1 y finalmente cierra y abre tu terminal.
 
-## Uso
+# Uso:
 Para abrir el juego ejecuta el comando ``` hangpy ``` en tu terminal de preferencia.
 
 ## Licencia
