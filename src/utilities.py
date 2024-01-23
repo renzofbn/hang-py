@@ -9,13 +9,11 @@ def clear():
         os.system("clear")
 
 
-def player(name):
-    print()
-    print(f"{name}, espero que te diviertas jugando a Hang-py  :D")
-    print("Las reglas son simples, tienes 10 intentos para adivinar la totalidad")
-    print("de letras que conforman una palabra, escogida al azar.")
-    print()
-    input('\033[93m¿List@ para jugar?  (Presiona enter para continuar)  \033[0m')
+def show_help():
+    print("""
+          Las reglas son simples, tienes 10 intentos para adivinar la totalidad
+          de letras que conforman una palabra, escogida al azar.
+          """)
 
 
 def map_word(word):
@@ -74,15 +72,11 @@ def right_c(chars):
 
 
 def show_chars(chars, r_chars, w_chars):
-    print("\033[93mLetras ingresadas hasta ahora -> \033[0m", end="")
-    for letra in chars:
-        print(letra, end=" ")
-    print()
-    print("\033[92mLetras correctas ingresadas hasta ahora -> \033[0m", end="")
+    print("\033[92mLetras correctas -> \033[0m", end="")
     for letra in r_chars:
         print(letra, end=" ")
     print()
-    print("\033[91mLetras incorrectas ingresadas hasta ahora -> \033[0m", end="")
+    print("\033[91mLetras incorrectas -> \033[0m", end="")
     for letra in w_chars:
         print(letra, end=" ")
     print('\n')
@@ -179,7 +173,7 @@ def show_top():
 def main_game(name):
     with open("./src/top.txt", 'r', encoding="utf-8") as f:
         data = f.readlines()[2:8]
-    with open('./src/words.txt', 'r', encoding="utf-8") as file:
+    with open('./src/dics/es.txt', 'r', encoding="utf-8") as file:
         words = [palabra[:-1] for palabra in file]
     position = 0
     points = 0
@@ -189,8 +183,6 @@ def main_game(name):
     while True:
         if errores < 10 and state == 1:
             hang_py(errores, state)
-            print(f"¡{name}, adivina la palabra¡")
-            print()
             for line in lines:
                 print(line, end="")
             print('\n')
