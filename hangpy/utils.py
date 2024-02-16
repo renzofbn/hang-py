@@ -1,4 +1,8 @@
 from configparser import ConfigParser
+from pathlib import Path
+
+hangpy_dir = Path(__file__).resolve().parent
+hangpy_config = f"{hangpy_dir}/config.ini"
 
 def gen_config(config: list = False):
     if not config:
@@ -29,7 +33,7 @@ def gen_config(config: list = False):
                 "name": "Player 5",
                 "points": "0",
             }
-    with open('./src/config.ini', 'w') as file_object:
+    with open(hangpy_config, "w") as file_object:
         config_file.write(file_object)
 
 
@@ -41,7 +45,7 @@ def clear():
         system("clear")
 
 CONFIG = ConfigParser()
-CONFIG.read('./src/config.ini')
+CONFIG.read(hangpy_config)
 if not CONFIG.sections():
     gen_config()
-    CONFIG.read('./src/config.ini')
+    CONFIG.read(hangpy_config)

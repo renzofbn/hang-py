@@ -1,58 +1,38 @@
-# Hang-py 🐍
+# Hangpy 🐍
 
-El juego del ahorcado en tu terminal !!!
+![GitHub](https://img.shields.io/github/license/renzofbn/hangpy) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/renzofbn/hangpy)
+
+Hangman game in python, with a simple terminal interface, ideal to test your vocabulary and have fun.
 
 ![Preview Gif](https://raw.githubusercontent.com/Renzofbn/hang-py/main/preview.gif)
 
-# Instalación:
-
-## Requisitos
-(click para ir a la página de descarga)
-
-- [Python3](https://www.python.org/downloads/)
-- [Git](https://git-scm.com/downloads)
-- Descarga [Hang-py](https://github.com/Renzofbn/hang-py/archive/refs/heads/main.zip) y descomprímelo en tu carpeta de preferencia o puedes clonar el repositorio usando Git:
+# Installation:
 
 ```
-git clone https://github.com/Renzofbn/hang-py.git
+pip install hangpy_cli
 ```
-## Windows
 
-### Auto-Instalación
+> Make sure to have ~/.local/bin directory in your `$PATH`, otherwise your shell won't find the hangpy command.
 
-* Si es necesario descomprime la carpeta de [Hang-py](https://github.com/Renzofbn/hang-py/archive/refs/heads/main.zip), o puedes instalar el instalador [aquí](https://github.com/Renzofbn/hang-py/releases/download/hang_py_v0.35/Windows_Installer.bat). Luego ejecuta el ```Windows_Installer.bat``` . Este script creará (solo si no existe) la carpeta **Games** y copiará
-el script ``` hangpy ``` en tu carpeta **System32** . Finalmente, cierra y abre tu terminal.
 
-## Linux
-Asumiendo que Bash es tu Shell predeterminada :
-* Mueve la carpeta a tu directorio de preferencia y copia la ruta del archivo ``` main.py ```.
-* Edita ``` ~/.bashrc ``` en tu editor preferido (puede que necesites permisos root), y Agrega una nueva línea con:
+# Usage:
+To start the game, just type:
 ```
-alias hangpy="cd RUTA_DEL_ARCHIVO_MAIN.PY && python main.py && cd ~"
+hangpy
 ```
-* Donde RUTA_DEL_ARCHIVO_MAIN.PY es la ruta que copiaste en el paso 1 y finalmente cierra y abre tu terminal.
+Change the word language or the menu language with:
+```
+hangpy -c
+```
+Watch the top 5 scores with:
+```
+hangpy -t
+```
+See the help message with:
+```
+hangpy -h
+```
 
-# Uso:
-Para abrir el juego ejecuta el comando ``` hangpy ``` en tu terminal de preferencia.
+## License
 
-## Licencia
-
-Hangpy tiene la licencia MIT. [Lee la licencia para más información](https://github.com/Renzofbn/hang-py/blob/main/LICENSE).
-
-
-               ▄              ▄                                                                                                                                                                   ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄    
-             ▄█ █▄          ▄█ █▄                                                                                                                                                                █▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄█   
-            █▄   ▄█        █▄   ▄█                                                                                                                                                                ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄  ▄▄▄▄    
-              █▄█            █▄█                                                                                                                                                                 █▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄██▄▄▄▄█   
-                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                                                            
-                 ╔╗                 ╔╗                                                                                                                                                                                                                     ╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗    
-                ╔╝╚╗╔═══╗╔═══╗╔═══╗╔╝╚╗                                                                                                                                                                                                                    ╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝    
-                ╚╗╔╝╚═══╝╚═══╝╚═══╝╚╗╔╝                                                                                                                                                                                                                    ╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗╔═══╗    
-                 ╚╝                 ╚╝                                                                                                                                                                                                                     ╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝╚═══╝    
-                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                            
-                                                        
-                                                                                                                                                                                                                                                          
-
+Hangpy is licensed under the MIT License - see the [LICENSE](https://github.com/renzofbn/hangpy/blob/main/LICENSE).

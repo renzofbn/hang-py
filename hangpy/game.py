@@ -1,7 +1,9 @@
-from src.ascii_status import *
+from hangpy.ascii_status import *
+from hangpy.utils import clear, gen_config, CONFIG
+from hangpy.translations import gm
+from hangpy.utils import hangpy_dir, hangpy_config
 from random import choice
-from src.utils import clear, gen_config, CONFIG
-from src.translations import gm
+
 
 def print_lives(lives):
   if 8 > lives > 0:
@@ -60,9 +62,9 @@ def save_points(player: str, points: int):
   if position > 0:
     CONFIG[f'Player_{position}'] = {
       "name": player,
-      "score": points
+      "points": points
       }
-    with open('./src/config.ini', 'w') as file_object:
+    with open(hangpy_config, "w") as file_object:
       CONFIG.write(file_object)
 
 
@@ -78,7 +80,7 @@ def ask_for_top(points, print_info = True):
   print('\033[92m', end="")
   try:
     for i in range(1, 6):
-      if not CONFIG[f'Player_{i}'] or int(CONFIG[f'Player_{i}']['score']) < points:
+      if not CONFIG[f'Player_{i}'] or int(CONFIG[f'Player_{i}']['points']) < points:
         position = i
         break
       else:
@@ -101,14 +103,14 @@ def show_top():
   print("Top 5 jugadores")
   for i in range(1, 6):
     try:
-      print(f"{i}. {CONFIG[f'Player_{i}']['name']} - {CONFIG[f'Player_{i}']['score']}")
+      print(f"{i}. {CONFIG[f'Player_{i}']['name']} - {CONFIG[f'Player_{i}']['points']}")
     except KeyError:
       print(f"{i}. Vacio")
 
 
 def get_words(lang):
   try:
-    with open(f"./src/dics/{lang}.txt", "r", encoding="utf-8") as f:
+    with open(f"{hangpy_dir}/data/dics/{lang}.txt", "r") as f:
       words = f.readlines()
     if words == []:
       print(gm[CONFIG["Game"]["lang"]]["get_words_err_1"], lang)
@@ -180,15 +182,19 @@ def main_game(player: str):
         print(f"{gm[CONFIG["Game"]["lang"]]["main_game_2"]} {game_total["points"]}\n")
         ask_for_top(game_total["points"])
 
-        if yes_no_qt(gm[CONFIG["Game"]["lang"]["main_game_3"]]):
-            is_new_game = True
-        
+        awns = yes_no_qt(gm[CONFIG["Game"]["lang"]]["main_game_3"])
+
+        if not awns:
+          break
+
+        is_new_game = True  
         clear()
     else:
         break
   # End of main game loop
 
   if current_game["lives"] == 0:
+    clear()
     print_ascii_state(current_game["lives"])
     print(f"\033[95m{gm[CONFIG["Game"]["lang"]]["main_game_4"]} {current_game["word"]}\033[0m")
     print(f"{gm[CONFIG["Game"]["lang"]]["main_game_2"]} {game_total["points"]}\n")  
@@ -210,7 +216,7 @@ def start_game():
   if not name:
     name = get_name()
     CONFIG["Game"]["default_player"] = name
-    with open('./src/config.ini', 'w') as file_object:
+    with open(hangpy_config, "w") as file_object:
       CONFIG.write(file_object)
   clear()
   main_game(name)
@@ -235,13 +241,13 @@ def configure_game():
   if choice == "1":
     lang = get_desire_lang()
     CONFIG["Game"]["lang"] = lang
-    with open('./src/config.ini', 'w') as file_object:
+    with open(hangpy_config, "w") as file_object:
       CONFIG.write(file_object)
     print(gm[CONFIG["Game"]["lang"]]["configure_game_4"])
   elif choice == "2":
     lang = get_desire_lang()
     CONFIG["Game"]["word_lang"] = lang
-    with open('./src/config.ini', 'w') as file_object:
+    with open(hangpy_config, "w") as file_object:
       CONFIG.write(file_object)
     print(gm[CONFIG["Game"]["lang"]]["configure_game_4"])
   else:

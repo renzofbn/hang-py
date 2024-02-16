@@ -133,3 +133,7 @@ dmypy.json
 /.idea
 .idea/
 prueba.py
+
+# IDEs
+.idea
+.vscode

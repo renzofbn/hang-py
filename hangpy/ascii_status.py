@@ -25,7 +25,7 @@ def print_ascii_state(lives: int, win : bool = False):
     
     print('\033[91m')
     if win:
-        print('\033[92m]', end="")
+        print('\033[92m', end="")
         print("          ██████████████████████")
         print("                           ██  █")
         print("                             ███")

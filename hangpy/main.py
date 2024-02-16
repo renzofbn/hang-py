@@ -1,5 +1,5 @@
-from src.game import start_game, show_top, configure_game
-from src.utils import clear
+from hangpy.game import start_game, show_top, configure_game
+from hangpy.utils import clear
 import argparse
 
 def run():
