@@ -9,7 +9,7 @@ Hangman game in python, with a simple terminal interface, ideal to test your voc
 # Installation:
 
 ```
-pip install hangpy_cli
+pip install hangpy-cli
 ```
 
 > Make sure to have ~/.local/bin directory in your `$PATH`, otherwise your shell won't find the hangpy command.
