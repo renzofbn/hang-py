@@ -1,3 +1,4 @@
+# English and Spanish translations for every sentence used
 
 gm = {
     "en": {
